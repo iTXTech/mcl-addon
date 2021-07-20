@@ -39,7 +39,7 @@ object PluginMain : KotlinPlugin(
     JvmPluginDescription(
         id = "org.itxtech.mcl.addon",
         name = "MCL Addon",
-        version = "1.0.0"
+        version = "1.1.0"
     ) {
         author("PeratX")
         info("iTXTech MCL 插件助手")
@@ -53,6 +53,7 @@ object PluginMain : KotlinPlugin(
         } catch (e: Exception){
             logger.error("Mirai Console was not loaded by iTXTech Mirai Console Loader")
             logger.error("Please check https://github.com/iTXTech/mirai-console-loader")
+            return
         }
         mcl = Loader.getInstance()
         logger.info("iTXTech MCL Version: ${mcl.version}")
