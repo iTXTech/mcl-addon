@@ -1,5 +1,18 @@
 # MCL Addon
 
+`MCL Addon` 支持在 [Mirai Console](https://github.com/mamoe/mirai-console)
+中访问几乎所有 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader) 命令行指令。
+
+但大部分更改需要使用 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader)
+重启 [Mirai Console](https://github.com/mamoe/mirai-console) 。
+
+# 安装
+
+1. ~~使用MCL（TODO）~~
+
+`.\mcl --update-package org.itxtech:mcl-addon --channel stable --type plugin`
+
+1. 从 [Release](https://github.com/iTXTech/mcl-addon/releases) 下载
 
 ## 开源许可证
 
