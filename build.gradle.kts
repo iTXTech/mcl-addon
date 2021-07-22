@@ -9,6 +9,15 @@ plugins {
 group = "org.itxtech"
 version = "1.1.0"
 
+kotlin {
+    sourceSets {
+        all {
+            languageSettings.enableLanguageFeature("InlineClasses")
+            languageSettings.useExperimentalAnnotation("kotlin.Experimental")
+        }
+    }
+}
+
 repositories {
     maven("https://maven.aliyun.com/repository/public")
 }
