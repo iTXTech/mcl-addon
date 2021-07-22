@@ -1,18 +1,64 @@
 # MCL Addon
 
 `MCL Addon` 支持在 [Mirai Console](https://github.com/mamoe/mirai-console)
-中访问几乎所有 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader) 命令行指令。
+中访问几乎所有 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader) 命令行指令，并带来更现代化的指令。
 
 但大部分更改需要使用 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader)
 重启 [Mirai Console](https://github.com/mamoe/mirai-console) 。
 
+即将登陆 `Maven Central`。
+
 # 安装
 
-1. ~~使用MCL（TODO）~~
+1. ~~使用MCL命令行（TODO）~~
 
 `.\mcl --update-package org.itxtech:mcl-addon --channel stable --type plugin`
 
 1. 从 [Release](https://github.com/iTXTech/mcl-addon/releases) 下载
+
+# 命令
+
+## `/mclc` - 传统 `MCL` 命令行
+
+```
+> mclc --list-packages //同命令行使用，支持大部分参数
+> mclc --enable/disable/list-script(s) --dry-run 等特殊指令不可用
+```
+
+## `/mcl` - 更现代化的 `MCL` 命令行
+
+```
+/mcl info <package>    # 获取包信息
+/mcl install <package> [channel] [type] [version] [lock or unlock]    # 安装包
+/mcl list    # 列出已安装的包
+/mcl remove <package> [delete]    # 移除包
+/mcl run <script>    # 执行脚本load阶段
+/mcl update    # 执行updater脚本
+
+列出mirai-console包的信息
+> mcl info net.mamoe:mirai-console
+
+锁定2.0.0版本的mirai-native
+> mcl install org.itxtech:mirai-native stable plugin 2.0.0 lock
+
+解除版本锁定（此时版本可以随意填写）
+> mcl install org.itxtech:mirai-native stable plugin ? unlock
+
+安装mirai-api-http（默认频道为stable，类型为plugin）
+> mcl install net.mamoe:mirai-api-http
+
+移除mirai-api-http
+> mcl remove net.mamoe:mirai-api-http
+
+移除mirai-api-http，并删除其文件（保留配置文件）
+> mcl remove net.mamoe:mirai-api-http delete
+
+执行announcement脚本抓取MCL公告
+> mcl run announcement
+
+执行updater脚本（将应用包的修改)
+> mcl update
+```
 
 ## 开源许可证
 

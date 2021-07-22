@@ -24,30 +24,10 @@
 
 package org.itxtech.mcl.addon
 
-import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.disable
-import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
-import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
+import net.mamoe.mirai.console.terminal.terminal
 
-object PluginMain : KotlinPlugin(
-    JvmPluginDescription(
-        id = "org.itxtech.mcl.addon",
-        name = "MCL Addon",
-        version = "1.1.0"
-    ) {
-        author("PeratX")
-        info("iTXTech MCL Addon")
-    }
-) {
-    lateinit var addon: Addon
-
-    override fun onEnable() {
-        try {
-            Class.forName("org.itxtech.mcl.Loader")
-        } catch (e: Exception) {
-            logger.error("Mirai Console 并未通过 iTXTech Mirai Console Loader 加载。")
-            logger.error("请访问 https://github.com/iTXTech/mirai-console-loader")
-            return
-        }
-        addon = Addon()
+class MclLoggerTerminal : MclLogger() {
+    override fun print(s: String) {
+        terminal.writer().print(s)
     }
 }
