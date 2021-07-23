@@ -8,7 +8,8 @@ plugins {
 }
 
 group = "org.itxtech"
-version = "1.1.0"
+version = "1.2.0"
+description = "MCL Addon 支持在 Mirai Console 中访问几乎所有 Mirai Console Loader 命令行指令，并带来更现代化的指令。"
 
 kotlin {
     sourceSets {
@@ -21,13 +22,14 @@ kotlin {
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
+    mavenCentral()
 }
 
 dependencies {
-    //compileOnly("org.itxtech:mcl:1.1.0")
-    implementation(files("libs/mcl.jar"))
-    compileOnly("org.jline:jline:3.15.0")
-    compileOnly("net.mamoe:mirai-console-terminal:2.7-M2")
+    implementation("org.itxtech:mirai-console-loader:1.2.0")
+    //Mirai Console Terminal Deps
+    implementation("net.mamoe:mirai-console-terminal:2.7-M2")
+    implementation("org.jline:jline:3.15.0")
 }
 
 mavenCentralPublish {
@@ -38,4 +40,9 @@ mavenCentralPublish {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
+}
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = "11"
+    targetCompatibility = "11"
 }
