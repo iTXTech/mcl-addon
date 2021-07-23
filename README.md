@@ -10,9 +10,11 @@
 
 # 安装
 
-1. ~~使用MCL命令行（TODO）~~
+1. 使用MCL命令行
 
-`.\mcl --update-package org.itxtech:mcl-addon --channel stable --type plugin`
+```
+.\mcl --update-package org.itxtech:mcl-addon --channel stable --type plugin
+```
 
 1. 从 [Release](https://github.com/iTXTech/mcl-addon/releases) 下载
 
