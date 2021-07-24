@@ -22,22 +22,31 @@
  *
  */
 
-package org.itxtech.mcl.addon
+package org.itxtech.mcl.addon.logger
 
-import net.mamoe.mirai.console.terminal.terminal
+import kotlinx.coroutines.launch
+import net.mamoe.mirai.console.command.CommandSender
+import net.mamoe.mirai.console.command.isUser
+import org.itxtech.mcl.addon.PluginMain
+import org.itxtech.mcl.addon.PluginMain.logger
 import org.itxtech.mcl.component.Logger
 import org.itxtech.mcl.impl.DefaultLogger
-import org.itxtech.mcl.addon.PluginMain.logger
 
-open class MclLogger : Logger {
-    private var logLevel = Logger.LOG_DEBUG
-
-    override fun setLogLevel(lvl: Int) {
-        logLevel = lvl
-    }
+open class ConsoleLogger : DefaultLogger() {
+    val sender: ThreadLocal<CommandSender?> = ThreadLocal()
 
     override fun log(s: String, lvl: Int) {
+        val sender = this.sender.get()
         if (lvl < logLevel) {
+            return
+        }
+        if (sender != null && sender.isUser()) {
+            PluginMain.launch {
+                try {
+                    sender.sendMessage(s)
+                } catch (ignored: Exception) {
+                }
+            }
             return
         }
         when (lvl) {
@@ -49,30 +58,10 @@ open class MclLogger : Logger {
         }
     }
 
-    override fun debug(s: String) {
-        log(s, Logger.LOG_DEBUG)
-    }
-
-    override fun info(s: String) {
-        log(s, Logger.LOG_INFO)
-    }
-
-    override fun warning(s: String) {
-        log(s, Logger.LOG_WARNING)
-    }
-
-    override fun error(s: String) {
-        log(s, Logger.LOG_ERROR)
-    }
-
     override fun println(s: String) {
         info(s)
     }
 
     override fun print(s: String) {
-    }
-
-    override fun logException(e: Throwable) {
-        error(DefaultLogger.getExceptionMessage(e))
     }
 }

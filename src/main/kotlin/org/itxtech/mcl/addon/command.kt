@@ -34,8 +34,33 @@ import net.mamoe.mirai.console.util.ConsoleExperimentalApi
 import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.content
 import org.itxtech.mcl.addon.PluginMain.addon
-import org.itxtech.mcl.addon.PluginMain.logger
+import org.itxtech.mcl.addon.logger.ConsoleLogger
 import org.itxtech.mcl.component.Config
+
+fun CommandSender.installLogger() {
+    val logger = addon.mcl.logger
+    if (logger is ConsoleLogger) {
+        logger.sender.set(this)
+    }
+}
+
+fun uninstallLogger() {
+    val logger = addon.mcl.logger
+    if (logger is ConsoleLogger) {
+        logger.sender.set(null)
+    }
+}
+
+fun CommandSender.runMclCommand(args: Array<String>) {
+    installLogger()
+    try {
+        addon.runMclCommand(args)
+    } catch (e: Exception) {
+        addon.mcl.logger.logException(e)
+    } finally {
+        uninstallLogger()
+    }
+}
 
 object MclcCommand : RawCommand(
     PluginMain,
@@ -45,7 +70,7 @@ object MclcCommand : RawCommand(
 ) {
     override suspend fun CommandSender.onCommand(args: MessageChain) {
         val a = args.map { it.content }.toTypedArray()
-        addon.runMclCommand(if (a.isEmpty()) arrayOf("-h") else a)
+        runMclCommand(if (a.isEmpty()) arrayOf("-h") else a)
     }
 }
 
@@ -62,7 +87,7 @@ object MclCommand : CompositeCommand(
         type: String = Config.Package.TYPE_PLUGIN, version: String = "",
         @Name("lock or unlock") lock: String = "unlock"
     ) {
-        addon.runMclCommand(arrayListOf("--update-package", pkg, "--channel", channel, "--type", type).apply {
+        runMclCommand(arrayListOf("--update-package", pkg, "--channel", channel, "--type", type).apply {
             if (version != "") {
                 add("--version")
                 add(version)
@@ -74,7 +99,7 @@ object MclCommand : CompositeCommand(
     @SubCommand
     @Description("移除包")
     suspend fun CommandSender.remove(@Name("package") pkg: String, @Name("delete") delete: String = "") {
-        addon.runMclCommand(arrayListOf("--remove-package", pkg).apply {
+        runMclCommand(arrayListOf("--remove-package", pkg).apply {
             if (delete != "") add("--delete")
         }.toTypedArray())
     }
@@ -82,17 +107,21 @@ object MclCommand : CompositeCommand(
     @SubCommand
     @Description("列出已安装的包")
     suspend fun CommandSender.list() {
-        addon.runMclCommand(arrayOf("--list-packages"))
+        runMclCommand(arrayOf("--list-packages"))
     }
 
     @SubCommand
     @Description("执行脚本load阶段")
     suspend fun CommandSender.run(script: String) {
-        addon.mcl.manager.getScript(script)?.apply {
-            phase.load?.run()
-            return
+        installLogger()
+        with(addon.mcl) {
+            manager.getScript(script)?.apply {
+                phase.load?.run()
+                return
+            }
+            logger.error("未找到脚本：${script}")
         }
-        logger.error("未找到脚本：${script}")
+        uninstallLogger()
     }
 
     @SubCommand
@@ -105,10 +134,10 @@ object MclCommand : CompositeCommand(
                 it.enable()
             } catch (ignored: IllegalStateException) {
             } catch (e: Exception) {
-                logger.error(e)
+                addon.mcl.logger.logException(e)
             }
         }
-        logger.warning("插件热加载可能导致致命错误，强烈建议重启MCL。")
+        addon.mcl.logger.warning("插件热加载可能导致致命错误，强烈建议重启MCL。")
     }
 
     @SubCommand

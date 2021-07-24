@@ -25,23 +25,9 @@
 package org.itxtech.mcl.addon
 
 import net.mamoe.mirai.console.command.CommandManager.INSTANCE.register
-import net.mamoe.mirai.console.command.CommandSender
-import net.mamoe.mirai.console.command.CompositeCommand
-import net.mamoe.mirai.console.command.RawCommand
-import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.disable
-import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.enable
-import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.load
-import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
-import net.mamoe.mirai.console.plugin.jvm.JvmPluginLoader
-import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
-import net.mamoe.mirai.console.terminal.terminal
-import net.mamoe.mirai.console.util.ConsoleExperimentalApi
-import net.mamoe.mirai.message.data.MessageChain
-import net.mamoe.mirai.message.data.content
 import org.itxtech.mcl.Loader
-import org.itxtech.mcl.component.Config
-import org.itxtech.mcl.component.Logger
-import org.itxtech.mcl.impl.DefaultLogger
+import org.itxtech.mcl.addon.logger.ConsoleLogger
+import org.itxtech.mcl.addon.logger.TerminalLogger
 
 class Addon{
     val mcl: Loader = Loader.getInstance()
@@ -49,10 +35,10 @@ class Addon{
     init {
         try{
             Class.forName("net.mamoe.mirai.console.terminal.MiraiConsoleImplementationTerminalKt")
-            mcl.logger = MclLoggerTerminal()
+            mcl.logger = TerminalLogger()
         } catch (e: Exception){
             PluginMain.logger.warning("未使用 Mirai Console Terminal 前端，print 不可用")
-            mcl.logger = MclLogger()
+            mcl.logger = ConsoleLogger()
         }
 
         PluginMain.logger.info("iTXTech MCL Version: ${mcl.version}")

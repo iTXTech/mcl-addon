@@ -22,12 +22,16 @@
  *
  */
 
-package org.itxtech.mcl.addon
+package org.itxtech.mcl.addon.logger
 
+import net.mamoe.mirai.console.command.isConsole
 import net.mamoe.mirai.console.terminal.terminal
 
-class MclLoggerTerminal : MclLogger() {
+class TerminalLogger : ConsoleLogger() {
     override fun print(s: String) {
-        terminal.writer().print(s)
+        val sender = sender.get()
+        if (sender != null && sender.isConsole()) {
+            terminal.writer().print(s)
+        }
     }
 }
