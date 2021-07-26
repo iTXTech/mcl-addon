@@ -36,10 +36,10 @@ open class ConsoleLogger : DefaultLogger() {
     val sender: ThreadLocal<CommandSender?> = ThreadLocal()
 
     override fun log(s: String, lvl: Int) {
-        val sender = this.sender.get()
         if (lvl < logLevel) {
             return
         }
+        val sender = this.sender.get()
         if (sender != null && sender.isUser()) {
             PluginMain.launch {
                 try {

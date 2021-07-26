@@ -8,8 +8,8 @@ plugins {
 }
 
 group = "org.itxtech"
-version = "1.2.0"
-description = "MCL Addon 支持在 Mirai Console 中访问几乎所有 Mirai Console Loader 命令行指令，并带来更现代化的指令。"
+version = "1.2.1"
+description = "在 Mirai Console 中使用MCL管理包和其他高级功能"
 
 kotlin {
     sourceSets {

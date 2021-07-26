@@ -1,12 +1,7 @@
 # MCL Addon
 
 `MCL Addon` 支持在 [Mirai Console](https://github.com/mamoe/mirai-console)
-中访问几乎所有 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader) 命令行指令，并带来更现代化的指令。
-
-但大部分更改需要使用 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader)
-重启 [Mirai Console](https://github.com/mamoe/mirai-console) 。
-
-即将登陆 `Maven Central`。
+中使用 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader) 管理包和其他高级功能。
 
 # 安装
 

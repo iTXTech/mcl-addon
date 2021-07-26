@@ -24,7 +24,6 @@
 
 package org.itxtech.mcl.addon
 
-import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.disable
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 
@@ -32,10 +31,10 @@ object PluginMain : KotlinPlugin(
     JvmPluginDescription(
         id = "org.itxtech.mcl.addon",
         name = "MCL Addon",
-        version = "1.1.0"
+        version = "1.2.1"
     ) {
         author("PeratX")
-        info("iTXTech MCL Addon")
+        info("MCL Addon 支持在 Mirai Console 中使用 Mirai Console Loader 管理包和其他高级功能")
     }
 ) {
     lateinit var addon: Addon
