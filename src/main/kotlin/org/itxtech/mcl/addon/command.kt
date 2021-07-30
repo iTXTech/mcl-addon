@@ -132,6 +132,7 @@ object MclCommand : CompositeCommand(
             try {
                 it.load()
                 it.enable()
+                InternalAccessor.addResolvedPlugin(it)
             } catch (ignored: IllegalStateException) {
             } catch (e: Exception) {
                 addon.mcl.logger.logException(e)

@@ -27,41 +27,52 @@ package org.itxtech.mcl.addon.logger
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.isUser
+import net.mamoe.mirai.console.util.sendAnsiMessage
 import org.itxtech.mcl.addon.PluginMain
 import org.itxtech.mcl.addon.PluginMain.logger
 import org.itxtech.mcl.component.Logger
 import org.itxtech.mcl.impl.DefaultLogger
+import org.itxtech.mcl.utils.AnsiMsg
 
 open class ConsoleLogger : DefaultLogger() {
     val sender: ThreadLocal<CommandSender?> = ThreadLocal()
 
-    override fun log(s: String, lvl: Int) {
+    override fun log(s: Any, lvl: Int) {
         if (lvl < logLevel) {
             return
         }
         val sender = this.sender.get()
+        val str = when (s) {
+            is AnsiMsg -> {
+                s.renderWithAnsi()
+            }
+            !is String -> {
+                s.toString()
+            }
+            else -> s
+        }
         if (sender != null && sender.isUser()) {
             PluginMain.launch {
                 try {
-                    sender.sendMessage(s)
+                    sender.sendAnsiMessage(str)
                 } catch (ignored: Exception) {
                 }
             }
             return
         }
         when (lvl) {
-            Logger.LOG_DEBUG -> logger.debug(s)
-            Logger.LOG_INFO -> logger.info(s)
-            Logger.LOG_WARNING -> logger.warning(s)
-            Logger.LOG_ERROR -> logger.error(s)
-            else -> logger.info(s)
+            Logger.LOG_DEBUG -> logger.debug(str)
+            Logger.LOG_INFO -> logger.info(str)
+            Logger.LOG_WARNING -> logger.warning(str)
+            Logger.LOG_ERROR -> logger.error(str)
+            else -> logger.info(str)
         }
     }
 
-    override fun println(s: String) {
+    override fun println(s: Any) {
         info(s)
     }
 
-    override fun print(s: String) {
+    override fun print(s: Any) {
     }
 }

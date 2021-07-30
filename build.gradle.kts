@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.itxtech:mirai-console-loader:1.2.1")
+    implementation("org.itxtech:mirai-console-loader:1.2.2")
     //Mirai Console Terminal Deps
     implementation("net.mamoe:mirai-console-terminal:2.7-M2")
     implementation("org.jline:jline:3.15.0")

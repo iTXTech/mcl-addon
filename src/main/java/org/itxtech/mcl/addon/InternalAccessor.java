@@ -1,3 +1,7 @@
+package org.itxtech.mcl.addon;
+
+import net.mamoe.mirai.console.plugin.Plugin;
+
 /*
  *
  * MCL Addon
@@ -21,17 +25,9 @@
  * @website https://github.com/iTXTech/mcl-addon
  *
  */
-
-package org.itxtech.mcl.addon.logger
-
-import net.mamoe.mirai.console.command.isConsole
-import net.mamoe.mirai.console.terminal.terminal
-
-class TerminalLogger : ConsoleLogger() {
-    override fun print(s: Any) {
-        val sender = sender.get()
-        if (sender != null && sender.isConsole()) {
-            terminal.writer().print(s)
-        }
+@SuppressWarnings("ALL")
+public class InternalAccessor {
+    public static void addResolvedPlugin(Plugin plugin) {
+        net.mamoe.mirai.console.internal.plugin.PluginManagerImpl.INSTANCE.resolvedPlugins.add(plugin);
     }
 }
