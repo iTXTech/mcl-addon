@@ -1,21 +1,20 @@
 plugins {
-    id("net.mamoe.maven-central-publish") version "0.6.0-dev-2"
-    val kotlinVersion = "1.5.20"
+    id("me.him188.maven-central-publish") version "1.0.0-dev-3"
+    val kotlinVersion = "1.6.0"
     kotlin("jvm") version kotlinVersion
-    kotlin("plugin.serialization") version kotlinVersion
 
-    id("net.mamoe.mirai-console") version "2.7-M2"
+    id("net.mamoe.mirai-console") version "2.11.0-M1"
 }
 
 group = "org.itxtech"
-version = "1.2.2"
+version = "2.0.0"
 description = "在 Mirai Console 中使用MCL管理包和其他高级功能"
 
 kotlin {
     sourceSets {
         all {
             languageSettings.enableLanguageFeature("InlineClasses")
-            languageSettings.useExperimentalAnnotation("kotlin.Experimental")
+            languageSettings.optIn("kotlin.Experimental")
         }
     }
 }
@@ -26,9 +25,9 @@ repositories {
 }
 
 dependencies {
-    implementation("org.itxtech:mirai-console-loader:1.2.2")
+    implementation("org.itxtech:mcl:2.0.0-beta.1")
     //Mirai Console Terminal Deps
-    implementation("net.mamoe:mirai-console-terminal:2.7-M2")
+    implementation("net.mamoe:mirai-console-terminal:2.11.0-M2.1")
     implementation("org.jline:jline:3.15.0")
 }
 

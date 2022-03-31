@@ -29,8 +29,8 @@
 /mcl install <package> [channel] [type] [version] [lock or unlock]    # 安装包
 /mcl list    # 列出已安装的包
 /mcl remove <package> [delete]    # 移除包
-/mcl run <script>    # 执行脚本load阶段
-/mcl update    # 执行updater脚本
+/mcl run <script>    # 执行模块load阶段
+/mcl update    # 执行updater模块
 
 列出mirai-console包的信息
 > mcl info net.mamoe:mirai-console
@@ -50,16 +50,17 @@
 移除mirai-api-http，并删除其文件（保留配置文件）
 > mcl remove net.mamoe:mirai-api-http delete
 
-执行announcement脚本抓取MCL公告
+执行announcement模块抓取MCL公告
 > mcl run announcement
 
-执行updater脚本（将应用包的修改)
+执行updater模块（将应用包的修改)
 > mcl update
 ```
 
 ## 开源许可证
 
-    Copyright (C) 2021 iTX Technologies
+    iTXTech MCL Addon
+    Copyright (C) 2021-2022 iTX Technologies
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as

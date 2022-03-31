@@ -2,7 +2,7 @@
  *
  * MCL Addon
  *
- * Copyright (C) 2021 iTX Technologies
+ * Copyright (C) 2021-2022 iTX Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -31,7 +31,7 @@ object PluginMain : KotlinPlugin(
     JvmPluginDescription(
         id = "org.itxtech.mcl.addon",
         name = "MCL Addon",
-        version = "1.2.2"
+        version = "2.0.0"
     ) {
         author("PeratX")
         info("MCL Addon 支持在 Mirai Console 中使用 Mirai Console Loader 管理包和其他高级功能")

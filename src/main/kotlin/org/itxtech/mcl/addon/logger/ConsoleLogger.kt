@@ -2,7 +2,7 @@
  *
  * MCL Addon
  *
- * Copyright (C) 2021 iTX Technologies
+ * Copyright (C) 2021-2022 iTX Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -32,7 +32,6 @@ import org.itxtech.mcl.addon.PluginMain
 import org.itxtech.mcl.addon.PluginMain.logger
 import org.itxtech.mcl.component.Logger
 import org.itxtech.mcl.impl.DefaultLogger
-import org.itxtech.mcl.utils.AnsiMsg
 
 open class ConsoleLogger : DefaultLogger() {
     val sender: ThreadLocal<CommandSender?> = ThreadLocal()
@@ -43,9 +42,6 @@ open class ConsoleLogger : DefaultLogger() {
         }
         val sender = this.sender.get()
         val str = when (s) {
-            is AnsiMsg -> {
-                s.renderWithAnsi()
-            }
             !is String -> {
                 s.toString()
             }

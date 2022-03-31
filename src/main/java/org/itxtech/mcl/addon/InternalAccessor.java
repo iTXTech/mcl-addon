@@ -1,12 +1,14 @@
 package org.itxtech.mcl.addon;
 
+import net.mamoe.mirai.console.MiraiConsole;
+import net.mamoe.mirai.console.internal.plugin.PluginManagerImpl;
 import net.mamoe.mirai.console.plugin.Plugin;
 
 /*
  *
  * MCL Addon
  *
- * Copyright (C) 2021 iTX Technologies
+ * Copyright (C) 2021-2022 iTX Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -28,6 +30,6 @@ import net.mamoe.mirai.console.plugin.Plugin;
 @SuppressWarnings("ALL")
 public class InternalAccessor {
     public static void addResolvedPlugin(Plugin plugin) {
-        net.mamoe.mirai.console.internal.plugin.PluginManagerImpl.INSTANCE.resolvedPlugins.add(plugin);
+        ((PluginManagerImpl) MiraiConsole.INSTANCE.getPluginManager()).resolvedPlugins.add(plugin);
     }
 }

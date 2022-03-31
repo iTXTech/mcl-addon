@@ -2,7 +2,7 @@
  *
  * MCL Addon
  *
- * Copyright (C) 2021 iTX Technologies
+ * Copyright (C) 2021-2022 iTX Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -111,21 +111,21 @@ object MclCommand : CompositeCommand(
     }
 
     @SubCommand
-    @Description("执行脚本load阶段")
+    @Description("执行模块load阶段")
     suspend fun CommandSender.run(script: String) {
         installLogger()
         with(addon.mcl) {
-            manager.getScript(script)?.apply {
-                phase.load?.run()
+            manager.getModule(script)?.apply {
+                load()
                 return
             }
-            logger.error("未找到脚本：${script}")
+            logger.error("未找到模块：${script}")
         }
         uninstallLogger()
     }
 
     @SubCommand
-    @Description("执行updater脚本")
+    @Description("执行updater模块")
     suspend fun CommandSender.update() {
         run("updater")
         JvmPluginLoader.listPlugins().forEach {
