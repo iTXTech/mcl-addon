@@ -24,11 +24,10 @@
 
 package org.itxtech.mcl.addon.logger
 
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.console.command.CommandSender
-import net.mamoe.mirai.console.command.isUser
+import net.mamoe.mirai.console.command.isNotConsole
 import net.mamoe.mirai.console.util.sendAnsiMessage
-import org.itxtech.mcl.addon.PluginMain
 import org.itxtech.mcl.addon.PluginMain.logger
 import org.itxtech.mcl.component.Logger
 import org.itxtech.mcl.impl.DefaultLogger
@@ -47,8 +46,8 @@ open class ConsoleLogger : DefaultLogger() {
             }
             else -> s
         }
-        if (sender != null && sender.isUser()) {
-            PluginMain.launch {
+        if (sender != null && sender.isNotConsole()) {
+            runBlocking {
                 try {
                     sender.sendAnsiMessage(str)
                 } catch (ignored: Exception) {

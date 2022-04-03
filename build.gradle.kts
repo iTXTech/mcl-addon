@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.itxtech"
-version = "2.0.0"
+version = "2.0.1"
 description = "在 Mirai Console 中使用MCL管理包和其他高级功能"
 
 kotlin {

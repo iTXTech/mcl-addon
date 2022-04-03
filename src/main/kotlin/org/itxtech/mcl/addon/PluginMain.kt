@@ -31,7 +31,7 @@ object PluginMain : KotlinPlugin(
     JvmPluginDescription(
         id = "org.itxtech.mcl.addon",
         name = "MCL Addon",
-        version = "2.0.0"
+        version = "2.0.1"
     ) {
         author("PeratX")
         info("MCL Addon 支持在 Mirai Console 中使用 Mirai Console Loader 管理包和其他高级功能")

@@ -35,7 +35,6 @@ import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.content
 import org.itxtech.mcl.addon.PluginMain.addon
 import org.itxtech.mcl.addon.logger.ConsoleLogger
-import org.itxtech.mcl.component.Config
 
 fun CommandSender.installLogger() {
     val logger = addon.mcl.logger
@@ -83,8 +82,8 @@ object MclCommand : CompositeCommand(
     @SubCommand
     @Description("安装包")
     suspend fun CommandSender.install(
-        @Name("package") pkg: String, channel: String = "stable",
-        type: String = Config.Package.TYPE_PLUGIN, version: String = "",
+        @Name("package") pkg: String, channel: String = "",
+        type: String = "", version: String = "",
         @Name("lock or unlock") lock: String = "unlock"
     ) {
         runMclCommand(arrayListOf("--update-package", pkg, "--channel", channel, "--type", type).apply {
