@@ -28,20 +28,34 @@ import net.mamoe.mirai.console.command.CommandManager.INSTANCE.register
 import org.itxtech.mcl.Loader
 import org.itxtech.mcl.addon.logger.ConsoleLogger
 import org.itxtech.mcl.addon.logger.TerminalLogger
+import org.itxtech.mcl.addon.soyuz.MclListPackageHandler
+import org.itxtech.mcl.addon.soyuz.MclRemovePackageHandler
+import org.itxtech.mcl.addon.soyuz.MclUpdatePackageHandler
+import org.itxtech.soyuz.handler.HandlerManager
 
-class Addon{
+class Addon {
     val mcl: Loader = Loader.getInstance()
 
     init {
-        try{
+        try {
             Class.forName("net.mamoe.mirai.console.terminal.MiraiConsoleImplementationTerminalKt")
             mcl.logger = TerminalLogger()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             PluginMain.logger.warning("未使用 Mirai Console Terminal 前端，print 不可用")
             mcl.logger = ConsoleLogger()
         }
 
         PluginMain.logger.info("iTXTech MCL Version: ${mcl.version}")
+
+        try {
+            Class.forName("org.itxtech.soyuz.Soyuz")
+
+            HandlerManager.register(MclUpdatePackageHandler())
+            HandlerManager.register(MclRemovePackageHandler())
+            HandlerManager.register(MclListPackageHandler())
+        } catch (e: Exception) {
+            PluginMain.logger.warning("iTXTech Soyuz 未安装，Soyuz MCL Handler 特性已禁用")
+        }
 
         MclcCommand.register()
         MclCommand.register()

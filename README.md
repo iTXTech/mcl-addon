@@ -3,15 +3,18 @@
 `MCL Addon` 支持在 [Mirai Console](https://github.com/mamoe/mirai-console)
 中使用 [Mirai Console Loader](https://github.com/iTXTech/mirai-console-loader) 管理包和其他高级功能。
 
+通过 [iTXTech Soyuz](https://github.com/iTXTech/soyuz) 提供 `Websocket API` 可用于 `WebUI` 或远程管理 `MCL`。
+
 # 安装
 
-1. 使用MCL命令行
+1. 使用MCL命令行，建议一同安装 `iTXTech Soyuz`
 
 ```
-.\mcl --update-package org.itxtech:mcl-addon --channel stable --type plugin
+.\mcl --update-package org.itxtech:mcl-addon
+.\mcl --update-package org.itxtech:soyuz
 ```
 
-1. 从 [Release](https://github.com/iTXTech/mcl-addon/releases) 下载
+2. 从 [Release](https://github.com/iTXTech/mcl-addon/releases) 下载
 
 # 命令
 

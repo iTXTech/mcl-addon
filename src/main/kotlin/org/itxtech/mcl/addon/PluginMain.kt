@@ -35,6 +35,7 @@ object PluginMain : KotlinPlugin(
     ) {
         author("PeratX")
         info("MCL Addon 支持在 Mirai Console 中使用 Mirai Console Loader 管理包和其他高级功能")
+        dependsOn("org.itxtech.soyuz", true)
     }
 ) {
     lateinit var addon: Addon
