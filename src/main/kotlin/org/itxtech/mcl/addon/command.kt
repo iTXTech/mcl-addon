@@ -24,9 +24,11 @@
 
 package org.itxtech.mcl.addon
 
+import net.mamoe.mirai.console.MiraiConsole
 import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.CompositeCommand
 import net.mamoe.mirai.console.command.RawCommand
+import net.mamoe.mirai.console.plugin.Plugin
 import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.enable
 import net.mamoe.mirai.console.plugin.PluginManager.INSTANCE.load
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginLoader
@@ -131,7 +133,7 @@ object MclCommand : CompositeCommand(
             try {
                 it.load()
                 it.enable()
-                InternalAccessor.addResolvedPlugin(it)
+                addResolvedPlugin(it)
             } catch (ignored: IllegalStateException) {
             } catch (e: Exception) {
                 addon.mcl.logger.logException(e)
@@ -145,4 +147,10 @@ object MclCommand : CompositeCommand(
     suspend fun CommandSender.info(@Name("package") pkg: String) {
         addon.runMclCommand(arrayOf("--package-info", pkg))
     }
+}
+
+@Suppress("INVISIBLE_REFERENCE", "INVISIBLE_MEMBER")
+fun addResolvedPlugin(p: Plugin) {
+    (MiraiConsole.INSTANCE.pluginManager as net.mamoe.mirai.console.internal.plugin.PluginManagerImpl)
+        .resolvedPlugins.add(p)
 }
