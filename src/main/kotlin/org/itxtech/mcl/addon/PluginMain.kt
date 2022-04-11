@@ -24,6 +24,7 @@
 
 package org.itxtech.mcl.addon
 
+import net.mamoe.mirai.console.command.CommandManager.INSTANCE.unregister
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 
@@ -43,11 +44,15 @@ object PluginMain : KotlinPlugin(
     override fun onEnable() {
         try {
             Class.forName("org.itxtech.mcl.Loader")
+            addon = Addon()
         } catch (e: Exception) {
             logger.error("Mirai Console 并未通过 iTXTech Mirai Console Loader 加载。")
             logger.error("请访问 https://github.com/iTXTech/mirai-console-loader")
-            return
         }
-        addon = Addon()
+    }
+
+    override fun onDisable() {
+        MclcCommand.unregister()
+        MclCommand.unregister()
     }
 }
