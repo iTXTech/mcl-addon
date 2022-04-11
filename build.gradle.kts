@@ -28,6 +28,7 @@ repositories {
 dependencies {
     implementation("org.itxtech:soyuz:1.0.0")
     implementation("org.itxtech:mcl:2.0.0-beta.3")
+    implementation("com.google.code.gson:gson:2.9.0")
     //Mirai Console Terminal Deps
     implementation("net.mamoe:mirai-console-terminal:2.11.0-M1")
     implementation("org.jline:jline:3.15.0")

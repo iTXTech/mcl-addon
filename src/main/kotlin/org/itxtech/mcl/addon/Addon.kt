@@ -28,9 +28,7 @@ import net.mamoe.mirai.console.command.CommandManager.INSTANCE.register
 import org.itxtech.mcl.Loader
 import org.itxtech.mcl.addon.logger.ConsoleLogger
 import org.itxtech.mcl.addon.logger.TerminalLogger
-import org.itxtech.mcl.addon.soyuz.MclListPackageHandler
-import org.itxtech.mcl.addon.soyuz.MclRemovePackageHandler
-import org.itxtech.mcl.addon.soyuz.MclUpdatePackageHandler
+import org.itxtech.mcl.addon.soyuz.*
 import org.itxtech.soyuz.handler.HandlerManager
 
 class Addon {
@@ -53,6 +51,8 @@ class Addon {
             HandlerManager.register(MclUpdatePackageHandler())
             HandlerManager.register(MclRemovePackageHandler())
             HandlerManager.register(MclListPackageHandler())
+            HandlerManager.register(MclFetchPackage())
+            HandlerManager.register(MclFetchPackageIndex())
         } catch (e: Exception) {
             PluginMain.logger.warning("iTXTech Soyuz 未安装，Soyuz MCL Handler 特性已禁用")
         }

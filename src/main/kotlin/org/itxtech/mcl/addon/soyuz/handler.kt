@@ -24,13 +24,17 @@
 
 package org.itxtech.mcl.addon.soyuz
 
+import com.google.gson.Gson
 import kotlinx.serialization.Serializable
 import org.itxtech.mcl.addon.PluginMain.addon
+import org.itxtech.mcl.component.Repository
 import org.itxtech.mcl.pkg.MclPackage
 import org.itxtech.soyuz.ReplyMessage
 import org.itxtech.soyuz.Soyuz
 import org.itxtech.soyuz.SoyuzWebSocketSession
 import org.itxtech.soyuz.handler.SoyuzHandler
+
+fun Any.toJson(): String = Gson().toJson(this)
 
 class MclUpdatePackageHandler : SoyuzHandler("mcl-update-package") {
     @Serializable
@@ -89,33 +93,57 @@ class MclRemovePackageHandler : SoyuzHandler("mcl-remove-package") {
 }
 
 class MclListPackageHandler : SoyuzHandler("mcl-list-package") {
-    @Serializable
     data class Packages(
         val key: String,
-        val packages: List<Package>
+        val packages: Collection<MclPackage>
     )
 
+    override suspend fun handle(session: SoyuzWebSocketSession, data: String) {
+        session.sendText(Packages(key, addon.mcl.packageManager.packages).toJson())
+    }
+}
+
+class MclFetchPackage : SoyuzHandler("mcl-fetch-package") {
     @Serializable
     data class Package(
+        val id: String
+    )
+
+    data class PackageInfo(
+        val key: String,
         val id: String,
-        val channel: String,
-        val version: String,
-        val type: String,
-        val versionLocked: Boolean
-    ) {
-        companion object {
-            fun from(pkg: MclPackage): Package {
-                return Package(pkg.id, pkg.channel, pkg.version, pkg.type, pkg.versionLocked)
-            }
-        }
+        val data: Repository.PackageInfo?
+    )
+
+    override suspend fun handle(session: SoyuzWebSocketSession, data: String) {
+        val id = Soyuz.json.decodeFromString(Package.serializer(), data).id
+        session.sendText(
+            PackageInfo(
+                key, id, try {
+                    addon.mcl.repo.fetchPackage(id)
+                } catch (e: Exception) {
+                    null
+                }
+            ).toJson()
+        )
     }
+}
+
+class MclFetchPackageIndex : SoyuzHandler("mcl-fetch-package-index") {
+    data class Index(
+        val key: String,
+        val data: Repository.MclPackageIndex?
+    )
 
     override suspend fun handle(session: SoyuzWebSocketSession, data: String) {
         session.sendText(
-            Soyuz.json.encodeToString(
-                Packages.serializer(), Packages(key,
-                    addon.mcl.packageManager.packages.map { p -> Package.from(p) })
-            )
+            Index(
+                key, try {
+                    addon.mcl.repo.fetchPackageIndex()
+                } catch (e: Exception) {
+                    null
+                }
+            ).toJson()
         )
     }
 }
