@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version kotlinVersion
 
     id("net.mamoe.mirai-console") version "2.11.0-M1"
-    kotlin("plugin.serialization") version "1.6.20-RC"
+    kotlin("plugin.serialization") version "1.6.20"
 }
 
 group = "org.itxtech"
@@ -26,10 +26,10 @@ repositories {
 }
 
 dependencies {
-    implementation("org.itxtech:soyuz:1.0.0-beta.1")
-    implementation("org.itxtech:mcl:2.0.0-beta.2")
+    implementation("org.itxtech:soyuz:1.0.0")
+    implementation("org.itxtech:mcl:2.0.0-beta.3")
     //Mirai Console Terminal Deps
-    implementation("net.mamoe:mirai-console-terminal:2.11.0-M2.1")
+    implementation("net.mamoe:mirai-console-terminal:2.11.0-M1")
     implementation("org.jline:jline:3.15.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 }

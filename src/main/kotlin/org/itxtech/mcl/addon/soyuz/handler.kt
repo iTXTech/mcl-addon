@@ -1,8 +1,8 @@
 /*
  *
- * iTXTech Soyuz
+ * MCL Addon
  *
- * Copyright (C) 2022 iTX Technologies
+ * Copyright (C) 2021-2022 iTX Technologies
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author PeratX
- * @website https://github.com/iTXTech/soyuz
+ * @website https://github.com/iTXTech/mcl-addon
  *
  */
 
@@ -26,7 +26,7 @@ package org.itxtech.mcl.addon.soyuz
 
 import kotlinx.serialization.Serializable
 import org.itxtech.mcl.addon.PluginMain.addon
-import org.itxtech.mcl.component.Config
+import org.itxtech.mcl.pkg.MclPackage
 import org.itxtech.soyuz.ReplyMessage
 import org.itxtech.soyuz.Soyuz
 import org.itxtech.soyuz.SoyuzWebSocketSession
@@ -44,10 +44,10 @@ class MclUpdatePackageHandler : SoyuzHandler("mcl-update-package") {
 
     override suspend fun handle(session: SoyuzWebSocketSession, data: String) {
         val info = Soyuz.json.decodeFromString(Info.serializer(), data)
-        val pkg = if (addon.mcl.config.hasPackage(info.id)) {
-            addon.mcl.config.packages.find { p -> p.id == info.id }!!
+        val pkg = if (addon.mcl.packageManager.hasPackage(info.id)) {
+            addon.mcl.packageManager.getPackage(info.id)
         } else {
-            Config.Package(info.id).apply { addon.mcl.config.packages.add(this) }
+            MclPackage(info.id).apply { addon.mcl.packageManager.addPackage(this) }
         }
         pkg.apply {
             if (info.type != null) {
@@ -76,10 +76,10 @@ class MclRemovePackageHandler : SoyuzHandler("mcl-remove-package") {
 
     override suspend fun handle(session: SoyuzWebSocketSession, data: String) {
         val info = Soyuz.json.decodeFromString(Info.serializer(), data)
-        if (addon.mcl.config.hasPackage(info.id)) {
-            addon.mcl.config.packages.find { p -> p.id == info.id }?.apply {
+        if (addon.mcl.packageManager.hasPackage(info.id)) {
+            addon.mcl.packageManager.getPackage(info.id)?.apply {
                 removeFiles()
-                addon.mcl.config.packages.remove(this)
+                addon.mcl.packageManager.removePackage(info.id)
             }
             session.sendText(ReplyMessage(key, "success").toJson())
         } else {
@@ -104,7 +104,7 @@ class MclListPackageHandler : SoyuzHandler("mcl-list-package") {
         val versionLocked: Boolean
     ) {
         companion object {
-            fun from(pkg: Config.Package): Package {
+            fun from(pkg: MclPackage): Package {
                 return Package(pkg.id, pkg.channel, pkg.version, pkg.type, pkg.versionLocked)
             }
         }
@@ -114,7 +114,7 @@ class MclListPackageHandler : SoyuzHandler("mcl-list-package") {
         session.sendText(
             Soyuz.json.encodeToString(
                 Packages.serializer(), Packages(key,
-                    addon.mcl.config.packages.map { p -> Package.from(p) })
+                    addon.mcl.packageManager.packages.map { p -> Package.from(p) })
             )
         )
     }

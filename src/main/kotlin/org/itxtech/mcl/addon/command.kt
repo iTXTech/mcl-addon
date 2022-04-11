@@ -88,7 +88,15 @@ object MclCommand : CompositeCommand(
         type: String = "", version: String = "",
         @Name("lock or unlock") lock: String = "unlock"
     ) {
-        runMclCommand(arrayListOf("--update-package", pkg, "--channel", channel, "--type", type).apply {
+        runMclCommand(arrayListOf("--update-package", pkg).apply {
+            if (channel != "") {
+                add("--channel")
+                add(channel)
+            }
+            if (type != "") {
+                add("--type")
+                add(type)
+            }
             if (version != "") {
                 add("--version")
                 add(version)
@@ -99,10 +107,8 @@ object MclCommand : CompositeCommand(
 
     @SubCommand
     @Description("移除包")
-    suspend fun CommandSender.remove(@Name("package") pkg: String, @Name("delete") delete: String = "") {
-        runMclCommand(arrayListOf("--remove-package", pkg).apply {
-            if (delete != "") add("--delete")
-        }.toTypedArray())
+    suspend fun CommandSender.remove(@Name("package") pkg: String) {
+        runMclCommand(arrayListOf("--remove-package", pkg).toTypedArray())
     }
 
     @SubCommand
