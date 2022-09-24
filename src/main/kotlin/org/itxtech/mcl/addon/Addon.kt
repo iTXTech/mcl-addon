@@ -57,8 +57,8 @@ class Addon {
             PluginMain.logger.warning("iTXTech Soyuz 未安装，Soyuz MCL Handler 特性已禁用")
         }
 
-        MclcCommand.register()
         MclCommand.register()
+        MclxCommand.register()
     }
 
     fun runMclCommand(args: Array<String>) {

@@ -63,10 +63,10 @@ fun CommandSender.runMclCommand(args: Array<String>) {
     }
 }
 
-object MclcCommand : RawCommand(
+object MclCommand : RawCommand(
     PluginMain,
-    primaryName = "mclc",
-    usage = "/mclc <MCL命令行参数>",
+    primaryName = "mcl",
+    usage = "/mcl <MCL命令行参数>",
     description = "调用 MCL 命令行"
 ) {
     override suspend fun CommandSender.onCommand(args: MessageChain) {
@@ -76,9 +76,9 @@ object MclcCommand : RawCommand(
 }
 
 @OptIn(ConsoleExperimentalApi::class)
-object MclCommand : CompositeCommand(
+object MclxCommand : CompositeCommand(
     PluginMain,
-    primaryName = "mcl",
+    primaryName = "mclx",
     description = "用于调用 MCL 的高级命令"
 ) {
     @SubCommand
