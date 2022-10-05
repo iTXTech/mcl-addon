@@ -52,7 +52,7 @@ object PluginMain : KotlinPlugin(
     }
 
     override fun onDisable() {
-        MclcCommand.unregister()
         MclCommand.unregister()
+        MclxCommand.unregister()
     }
 }
