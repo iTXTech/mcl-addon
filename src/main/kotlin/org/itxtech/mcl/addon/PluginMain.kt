@@ -41,6 +41,19 @@ object PluginMain : KotlinPlugin(
 ) {
     lateinit var addon: Addon
 
+    init {
+        try {
+            fixMiraiConsoleLoader()
+        } catch (_: Throwable) {
+            //
+        }
+        try {
+            fixMiraiConsole()
+        } catch (_: Throwable) {
+            //
+        }
+    }
+
     override fun onEnable() {
         try {
             Class.forName("org.itxtech.mcl.Loader")
