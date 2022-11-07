@@ -18,46 +18,48 @@
 
 # 命令
 
-## `/mclc` - 传统 `MCL` 命令行
+从 `2.1.0` 开始将原来的 `mclc` 替换为 `mcl`, `mcl` 替换为 `mclx`
+
+## `/mcl` - 传统 `MCL` 命令行
 
 ```
-> mclc --list-packages //同命令行使用，支持大部分参数
-> mclc --enable/disable/list-script(s) --dry-run 等特殊指令不可用
+> mcl --list-packages //同命令行使用，支持大部分参数
+> mcl --enable/disable/list-script(s) --dry-run 等特殊指令不可用
 ```
 
-## `/mcl` - 更现代化的 `MCL` 命令行
+## `/mclx` - 更现代化的 `MCL` 命令行
 
 ```
-/mcl info <package>    # 获取包信息
-/mcl install <package> [channel] [type] [version] [lock or unlock]    # 安装包
-/mcl list    # 列出已安装的包
-/mcl remove <package> [delete]    # 移除包
-/mcl run <script>    # 执行模块load阶段
-/mcl update    # 执行updater模块
+/mclx info <package>    # 获取包信息
+/mclx install <package> [channel] [type] [version] [lock or unlock]    # 安装包
+/mclx list    # 列出已安装的包
+/mclx remove <package> [delete]    # 移除包
+/mclx run <script>    # 执行模块load阶段
+/mclx update    # 执行updater模块
 
 列出mirai-console包的信息
-> mcl info net.mamoe:mirai-console
+> mclx info net.mamoe:mirai-console
 
 锁定2.0.0版本的mirai-native
-> mcl install org.itxtech:mirai-native stable plugin 2.0.0 lock
+> mclx install org.itxtech:mirai-native stable plugin 2.0.0 lock
 
 解除版本锁定（此时版本可以随意填写）
-> mcl install org.itxtech:mirai-native stable plugin ? unlock
+> mclx install org.itxtech:mirai-native stable plugin ? unlock
 
 安装mirai-api-http（默认频道为stable，类型为plugin）
-> mcl install net.mamoe:mirai-api-http
+> mclx install net.mamoe:mirai-api-http
 
 移除mirai-api-http
-> mcl remove net.mamoe:mirai-api-http
+> mclx remove net.mamoe:mirai-api-http
 
 移除mirai-api-http，并删除其文件（保留配置文件）
-> mcl remove net.mamoe:mirai-api-http delete
+> mclx remove net.mamoe:mirai-api-http delete
 
 执行announcement模块抓取MCL公告
-> mcl run announcement
+> mclx run announcement
 
 执行updater模块（将应用包的修改)
-> mcl update
+> mclx update
 ```
 
 ## 开源许可证
