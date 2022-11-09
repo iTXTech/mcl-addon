@@ -11,16 +11,13 @@ import org.itxtech.mcl.Loader
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.moveTo
-import kotlin.io.path.readText
-import kotlin.io.path.writeBytes
-import kotlin.io.path.writeText
+import kotlin.io.path.*
 import kotlin.system.exitProcess
 
 fun fixMiraiConsoleLoader() {
     val loader = Loader.getInstance()
     var change = false
-    if (loader.config.miraiRepo == "https://repo.mirai.mamoe.net/keep/mcl") {
+    if (loader.config.miraiRepo == "https://repo.itxtech.org") {
         loader.config.miraiRepo = "https://repo.mirai.mamoe.net/keep/mcl"
         change = true
     }
@@ -71,7 +68,7 @@ fun fixMiraiConsoleLoader() {
 
 private fun updateMiraiConsoleLoader(maven: String, version: String): Boolean {
     val xml = URL("$maven/org/itxtech/mcl/maven-metadata.xml").readText()
-    val release = """<release>(.+)<""".toRegex().find(xml)?.groupValues?.get(1)
+    val release = """<release>(.+)<""".toRegex().find(xml)?.groupValues?.get(1).orEmpty()
     if (release != version) {
         consoleLogger.warning("mcl 将尝试升级")
         val temp = Files.createTempFile("mcl", ".jar")
@@ -81,10 +78,14 @@ private fun updateMiraiConsoleLoader(maven: String, version: String): Boolean {
         temp.moveTo(Path.of(filename))
 
         val sh = Path.of("mcl")
-        sh.writeText(sh.readText().replace("""mcl(.*)\.jar""".toRegex(), filename))
+        if (sh.isWritable()) {
+            sh.writeText(sh.readText().replace("""mcl(.*)\.jar""".toRegex(), filename))
+        }
 
         val cmd = Path.of("mcl.cmd")
-        cmd.writeText(cmd.readText().replace("""mcl(.*)\.jar""".toRegex(), filename))
+        if (cmd.isWritable()) {
+            cmd.writeText(cmd.readText().replace("""mcl(.*)\.jar""".toRegex(), filename))
+        }
 
         return true
     }
