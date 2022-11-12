@@ -4,7 +4,7 @@ import net.mamoe.mirai.console.ConsoleFrontEndImplementation
 import net.mamoe.mirai.console.MiraiConsoleImplementation
 import net.mamoe.mirai.console.data.Value
 import net.mamoe.mirai.console.data.findBackingFieldValue
-import net.mamoe.mirai.console.internal.data.builtins.*
+import net.mamoe.mirai.console.internal.data.builtins.PluginDependenciesConfig
 import net.mamoe.mirai.console.terminal.consoleLogger
 import net.mamoe.mirai.console.util.ConsoleExperimentalApi
 import org.itxtech.mcl.Loader
@@ -22,9 +22,7 @@ fun fixMiraiConsoleLoader() {
         change = true
     }
     val mavenRepo = arrayListOf(
-        "https://maven.aliyun.com/repository/public",
-        "https://repo.huaweicloud.com/repository/maven",
-        "https://repo1.maven.org/maven2"
+        "https://maven.aliyun.com/repository/public"
     )
     if (loader.config.mavenRepo.singleOrNull() == "https://maven.aliyun.com/repository/public") {
         loader.config.mavenRepo = mavenRepo
