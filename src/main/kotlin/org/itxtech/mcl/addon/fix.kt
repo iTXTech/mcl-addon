@@ -4,7 +4,6 @@ import net.mamoe.mirai.console.ConsoleFrontEndImplementation
 import net.mamoe.mirai.console.MiraiConsoleImplementation
 import net.mamoe.mirai.console.data.Value
 import net.mamoe.mirai.console.data.findBackingFieldValue
-import net.mamoe.mirai.console.internal.data.builtins.PluginDependenciesConfig
 import net.mamoe.mirai.console.terminal.consoleLogger
 import net.mamoe.mirai.console.util.ConsoleExperimentalApi
 import org.itxtech.mcl.Loader
@@ -94,7 +93,8 @@ private fun updateMiraiConsoleLoader(maven: String, version: String): Boolean {
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "UNCHECKED_CAST")
 fun fixMiraiConsole() {
     with(MiraiConsoleImplementation.getInstance()) {
-        val config = consoleDataScope.get(PluginDependenciesConfig::class)
+        val config =
+            consoleDataScope.get(net.mamoe.mirai.console.internal.data.builtins.PluginDependenciesConfig::class)
         if (config.repoLoc.singleOrNull().orEmpty().startsWith("https://maven.aliyun.com")) {
             val field = config.findBackingFieldValue(config::repoLoc) as Value<List<String>>
             field.value += "https://repo.huaweicloud.com/repository/maven"
