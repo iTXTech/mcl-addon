@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.itxtech"
-version = "2.1.0"
+version = "2.1.1"
 description = "在 Mirai Console 中使用MCL管理包和其他高级功能"
 
 repositories {
